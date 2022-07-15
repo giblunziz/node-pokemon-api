@@ -1,16 +1,14 @@
 const express = require('express')
-const morgan = require('morgan')
-const favicon = require('serve-favicon')
 const bodyParser = require('body-parser')
 
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app
-  .use(favicon('./favicon.ico'))
-  .use(morgan('dev'))
   .use(bodyParser.json())
+
+app.get('/', (req, res) => res.json('Server up'))
 
 require('./src/routes/createPokemon')(app)
 require('./src/routes/deletePokemon')(app)
