@@ -1,9 +1,10 @@
 const {Pokemon} = require('../db/sequelize')
 const {ValidationError} = require("sequelize");
 const detail = require('../helpers/validationErrorHelper')
+const auth = require('../auth/auth')
 
 module.exports = (app) => {
-  app.post('/api/pokemon', (req, res) => {
+  app.post('/api/pokemon', auth, (req, res) => {
     Pokemon.create(req.body)
       .then(pokemon => {
         const message = `Le pokémon ${req.body.name} a bien été crée.`

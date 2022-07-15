@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const favicon = require('serve-favicon')
 const bodyParser = require('body-parser')
 
+
 const app = express()
 const port = 3000
 
@@ -17,6 +18,8 @@ require('./src/routes/findAllPokemons')(app)
 require('./src/routes/findPokemonByPk')(app)
 require('./src/routes/updatePokemon')(app)
 require('./src/routes/initDatabase')(app)
+
+require('./src/routes/login')(app)
 
 // Start listener
 app.listen(port, () => {
