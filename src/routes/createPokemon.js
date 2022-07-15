@@ -1,4 +1,6 @@
 const {Pokemon} = require('../db/sequelize')
+const {ValidationError} = require("sequelize");
+const detail = require('../helpers/validationErrorHelper')
 
 module.exports = (app) => {
   app.post('/api/pokemon', (req, res) => {
@@ -8,8 +10,10 @@ module.exports = (app) => {
         res.json({message, data: pokemon})
       })
       .catch(error => {
-        res.status(500)
-        res.json({error: `Unable to create pokemon ${error}`})
+        if( error instanceof ValidationError) {
+          return res.status(400).json({message: error.message, data: new detail(error)})
+        }
+        res.status(500).json({message: `Impossible de créer votre pokemon`, data: error})
       })
 
   })
